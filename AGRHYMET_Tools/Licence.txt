@@ -1,0 +1,4 @@
+Code written by WENR for the processing of ERA5 and HRES data in the frame of MARSOP5 contract and 
+released by JRC D5 under conditions specified by the EUPL licence 1.2
+
+Contact: herve.kerdiles@ec.europa.eu, andrea.toreti@ec.europa.eu
