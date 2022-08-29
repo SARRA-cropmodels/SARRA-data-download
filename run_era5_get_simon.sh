@@ -6,8 +6,6 @@
 conda deactivate
 conda activate sarrao
 
-
-
 #run download data
 python main_0_download_ERA5_CDS_API_monthly.py 2014-02 2014-03 "burkina"
 
