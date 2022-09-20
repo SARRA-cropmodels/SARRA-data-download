@@ -1,4 +1,9 @@
 https://confluence.meteogroup.net/display/MA5/JRC+Marsop5%3A+Yearly+ERA5+processing
+setup your cdsapi key https://cds.climate.copernicus.eu/api-how-to
+accept TOS at https://cds.climate.copernicus.eu/cdsapp/#!/terms/licence-to-use-copernicus-products
+
+modify config.py to include out path in bdir variable
+
 ## 1. téléchargement des données
 #### <br> run python main_0_download_ERA5_CDS_API_monthly.py
 
