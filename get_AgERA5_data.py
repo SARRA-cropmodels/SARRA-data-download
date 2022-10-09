@@ -341,8 +341,10 @@ def delete_AgERA5_intermediate_files(dump):
 
 # run all
 # parameters
-area = {'burkina': [16, -6, 9, 3]}
-selected_area = "burkina"
+area = {
+    'burkina': [16, -6, 9, 3],
+    'west_africa':[29, -20, 3.5, 26]}
+selected_area = "west_africa"
 variables = [
     ("2m_temperature","24_hour_minimum"),
     ("2m_temperature","24_hour_maximum"),
@@ -364,6 +366,7 @@ def run():
     print("===== Query date",query_date.date(),"all done ! =====")
 
 schedule.every().day.at("12:00").do(run)
+# schedule.every().minute.do(run) # for testing purposes
 
 # Loop so that the scheduling task
 # keeps on running all time.
