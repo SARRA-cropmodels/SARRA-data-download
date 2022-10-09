@@ -14,7 +14,7 @@ Then, clone this repo and install its dependencies :
     cd SARRA_data-download
     python get_AgERA5_data.py
 
-The previous command triggers the download of all the data of the month of the last available date in AgERA5. 
+The previous command triggers the download of all the data of the month of the last available date in AgERA5, every day at 12:00 PM. 
 Download will be performed by default on an extent covering all West Africa. Output files will be daily geotiffs, as required to run SARRA-O.
 
 For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all data from 2022-09-01 to 2022-09-07.
