@@ -14,9 +14,22 @@ Then, clone this repo and install its dependencies :
     cd SARRA_data-download
     python get_AgERA5_data.py
 
-The previous command triggers the download of all the data of the month of the last available date in AgERA5, every day at 12:00 PM. 
-Download will be performed by default on an extent covering all West Africa. Output files will be daily geotiffs, as required to run SARRA-O.
-
-For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all data from 2022-09-01 to 2022-09-07.
+This script automatically downloads AgERA5 data for the whole month of the last available date, every day at 12:00 PM. For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all data from 2022-09-01 to 2022-09-07.
+Download is performed by default on an extent covering all West Africa (29°N,-20°E to 3.5°N,26°E).
+Retrieved variables are Tmin, Tmax, solar radiation. 
+ET0 is computed using Hargraeves formula.
+Output files will be daily geotiffs, as required to run SARRA-O.
 
 The downloaded and prepared data will be stored in the `./data/3_output/` path.
+
+# ASSETS :
+This repo also hosts a downscaled iSDAsoil soil texture class (USDA system) (https://zenodo.org/record/4094616#.Y0RBArTP1mN) to be used with SARRA. Downscaling was performed from the 0-20cm depth classification, at 4km resolution, aligned with TAMSAT raster files. Values were converted to SARRA-O soil type format, a 7 to 8 digit integer where the 6 last digits must be zeroes, and the first digits are the USDA soil code corresponding to the soil characteristics described in the `./data/csvTypeSol/` folder of SARRA-O executable file. Also, the null category value was replaced from 255 in iSDA to 0 in SARRA format.
+This asset can be found in `./soil_maps/` path.
+To be used in SARRA-O, this file must be renamed `soil_africa_sarrah_tamsat.tif` and put into `./data/` folder of SARRA-O executable.
+
+# TO-DO :
+Calcul du ET0 par PM
+Utiliser un MNT à la résolution des données pluie
+TAMSAT resolution
+sols actuellement à 9km
+isda soil : à dégrader à la résolution de la pluie, ou a 3 km
