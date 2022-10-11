@@ -2,7 +2,6 @@ pandas
 numpy
 tqdm
 cdsapi
-zipfile
 xarray
 rioxarray
 rasterio
