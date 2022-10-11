@@ -22,6 +22,18 @@ Output files will be daily geotiffs, as required to run SARRA-O.
 
 The downloaded and prepared data will be stored in the `./data/3_output/` path.
 
+**TAMSAT data download**
+
+    cd SARRA_data-download
+    python get_TAMSAT_data.py
+
+This script automatically downloads TAMSAT v3.1 data for the whole month of the last AgERA5 available date, every day at 12:00 PM. For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all TAMSAT data from 2022-09-01 to 2022-09-07.
+Download is performed by default on an extent covering all West Africa (29°N,-20°E to 3.5°N,26°E).
+Retrieved variables is `rfe_filled`. 
+Output files will be daily geotiffs, as required to run SARRA-O.
+
+The downloaded and cropped data will be stored in the `./data/3_output/` path.
+
 # ASSETS :
 This repo also hosts a downscaled iSDAsoil soil texture class (USDA system) (https://zenodo.org/record/4094616#.Y0RBArTP1mN) to be used with SARRA. Downscaling was performed from the 0-20cm depth classification, at 4km resolution, aligned with TAMSAT raster files. Values were converted to SARRA-O soil type format, a 7 to 8 digit integer where the 6 last digits must be zeroes, and the first digits are the USDA soil code corresponding to the soil characteristics described in the `./data/csvTypeSol/` folder of SARRA-O executable file. Also, the null category value was replaced from 255 in iSDA to 0 in SARRA format.
 This asset can be found in `./soil_maps/` path.

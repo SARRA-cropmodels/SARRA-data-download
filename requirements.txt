@@ -6,3 +6,4 @@ xarray
 rioxarray
 rasterio
 schedule
+requests
