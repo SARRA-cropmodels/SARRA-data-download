@@ -11,7 +11,7 @@ Then, clone this repo and install its dependencies :
 ## How to use
 **AgERA5 data download**
 
-    cd SARRA_data-download
+    cd SARRA_data_download
     python get_AgERA5_data.py
 
 This script automatically downloads AgERA5 data for the whole month of the last available date, every day at 12:00 PM. For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all data from 2022-09-01 to 2022-09-07.
@@ -24,7 +24,7 @@ The downloaded and prepared data will be stored in the `./data/3_output/` path.
 
 **TAMSAT data download**
 
-    cd SARRA_data-download
+    cd SARRA_data_download
     python get_TAMSAT_data.py
 
 This script automatically downloads TAMSAT v3.1 data for the whole month of the last AgERA5 available date, every day at 12:00 PM. For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all TAMSAT data from 2022-09-01 to 2022-09-07.
