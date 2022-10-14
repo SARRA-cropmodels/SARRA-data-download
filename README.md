@@ -34,6 +34,19 @@ Output files will be daily geotiffs, as required to run SARRA-O.
 
 The downloaded and cropped data will be stored in the `./data/3_output/` path.
 
+**AgERA5 point data download**
+
+    cd SARRA_data_download
+    python get_AgERA5_data_point.py
+
+This script automatically downloads AgERA5 data for a whole year, for the given coordinates.
+Retrieved variables are Tmin, Tmax, Tmoy, solar radiation. 
+ET0 is computed using Penman-Monteith as implemented in pcse.
+Elevation info needed by pcse is retrieved from OpenElevation API.
+Output files will be saved as csv, as required to run SARRA-H.
+
+The downloaded and prepared data will be stored in the `./data/3_output/` path.
+
 # ASSETS :
 This repo also hosts a downscaled iSDAsoil soil texture class (USDA system) (https://zenodo.org/record/4094616#.Y0RBArTP1mN) to be used with SARRA. Downscaling was performed from the 0-20cm depth classification, at 4km resolution, aligned with TAMSAT raster files. Values were converted to SARRA-O soil type format, a 7 to 8 digit integer where the 6 last digits must be zeroes, and the first digits are the USDA soil code corresponding to the soil characteristics described in the `./data/csvTypeSol/` folder of SARRA-O executable file. Also, the null category value was replaced from 255 in iSDA to 0 in SARRA format.
 This asset can be found in `./soil_maps/` path.
