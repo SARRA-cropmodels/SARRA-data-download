@@ -49,8 +49,11 @@ The downloaded and prepared data will be stored in the `./data/3_output/` path.
 
 # ASSETS :
 This repo also hosts a downscaled iSDAsoil soil texture class (USDA system) (https://zenodo.org/record/4094616#.Y0RBArTP1mN) to be used with SARRA. Downscaling was performed from the 0-20cm depth classification, at 4km resolution, aligned with TAMSAT raster files. Values were converted to SARRA-O soil type format, a 7 to 8 digit integer where the 6 last digits must be zeroes, and the first digits are the USDA soil code corresponding to the soil characteristics described in the `./data/csvTypeSol/` folder of SARRA-O executable file. Also, the null category value was replaced from 255 in iSDA to 0 in SARRA format.
-This asset can be found in `./soil_maps/` path.
-To be used in SARRA-O, this file must be renamed `soil_africa_sarrah_tamsat.tif` and put into `./data/` folder of SARRA-O executable.
+
+This repo also hosts a downscaled ISRIC Africa SoilGrids soil texture class (USDA system) to be used with SARRA. Downscaling was performed from computing the mode of the different layers in the 0-60cm depth range of the classification, at 4km resolution, aligned with TAMSAT raster files. Values were converted to SARRA-O soil type format, a 7 to 8 digit integer where the 6 last digits must be zeroes, and the first digits are the USDA soil code corresponding to the soil characteristics described in the `./data/csvTypeSol/` folder of SARRA-O executable file. Also, the null category value was replaced from 255 in iSDA to 0 in SARRA format.
+
+These assets can be found in `./soil_maps/` path.
+To be used in SARRA-O, these files must be renamed `soil_africa_sarrah_tamsat.tif` and put into `./data/` folder of SARRA-O executable.
 
 # TO-DO :
 Calcul du ET0 par PM
