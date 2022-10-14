@@ -20,7 +20,7 @@ from pcse.util import reference_ET
 def convert_point_to_area(points, selected_point):
     print("===== convert_point_to_area =====")
     #fonctionne seulement dans le nord ?
-    area = points
+    area = {selected_point:points[selected_point]}
     # area[selected_point] = [np.round(points[selected_point][0]*4,0)/4,
     #                         np.round(points[selected_point][1]*4,0)/4-0.25,
     #                         np.round(points[selected_point][0]*4,0)/4-0.25,
