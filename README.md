@@ -45,6 +45,9 @@ ET0 is computed using Penman-Monteith as implemented in pcse.
 Elevation info needed by pcse is retrieved from OpenElevation API.
 Output files will be saved as csv, as required to run SARRA-H.
 
+**TAMSAT point data download**
+
+This script automatically downloads TAMSAT tabular data format, for the given coordinates.
 The downloaded and prepared data will be stored in the `./data/3_output/` path.
 
 # ASSETS :
