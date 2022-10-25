@@ -7,6 +7,7 @@ First, [setup a Copernicus Climate Data Store API key](https://cds.climate.coper
 Then, clone this repo and install its dependencies :
 
     git clone https://github.com/SARRA-cropmodels/SARRA_data-download
+    cd SARRA_data_download
     pip install -r requirements.txt
 ## How to use
 **AgERA5 data download**
@@ -24,7 +25,6 @@ The downloaded and prepared data will be stored in the `./data/3_output/` path.
 
 **TAMSAT data download**
 
-    cd SARRA_data_download
     python get_TAMSAT_data.py
 
 This script automatically downloads TAMSAT v3.1 data for the whole month of the last AgERA5 available date, every day at 12:00 PM. For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all TAMSAT data from 2022-09-01 to 2022-09-07.
@@ -36,7 +36,6 @@ The downloaded and cropped data will be stored in the `./data/3_output/` path.
 
 **AgERA5 point data download**
 
-    cd SARRA_data_download
     python get_AgERA5_data_point.py
 
 This script automatically downloads AgERA5 data for a whole year, for the given coordinates.
