@@ -365,8 +365,8 @@ def run():
     delete_AgERA5_intermediate_files(False)
     print("===== Query date",query_date.date(),"all done ! =====")
 
-schedule.every().day.at("12:00").do(run)
-# schedule.every().minute.do(run) # for testing purposes
+#schedule.every().day.at("12:00").do(run)
+schedule.every().minute.do(run) # for testing purposes
 
 # Loop so that the scheduling task
 # keeps on running all time.
