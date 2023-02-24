@@ -1,6 +1,9 @@
 
 # SARRA data download
 This repo is a collection of tools to download and prepare climate and weather files necessary for SARRA-O runs. So far, it can be used to retrieve AgERA5 daily data from the Copernicus Climate Data Store.
+
+Rationale : allow for easy download of time series from different data providers for Africa, that will be converted in geotiff and clipped along the desired coordinates for ease of use in SARRA crop models (both SARRA-O, SARRA-H and SARRA-Py)
+
 ## How to install
 You will need Python 3.9.6 or above.
 First, [setup a Copernicus Climate Data Store API key](https://cds.climate.copernicus.eu/api-how-to) and accept [Copernicus Terms of Service](https://cds.climate.copernicus.eu/cdsapp/#!/terms/licence-to-use-copernicus-products).
@@ -52,6 +55,8 @@ The downloaded and prepared data will be stored in the `./data/3_output/` path.
 
 # ASSETS :
 This repo also hosts a downscaled iSDAsoil soil texture class (USDA system) (https://zenodo.org/record/4094616#.Y0RBArTP1mN) to be used with SARRA. Downscaling was performed from the 0-20cm depth classification, at 4km resolution, aligned with TAMSAT raster files. Values were converted to SARRA-O soil type format, a 7 to 8 digit integer where the 6 last digits must be zeroes, and the first digits are the USDA soil code corresponding to the soil characteristics described in the `./data/csvTypeSol/` folder of SARRA-O executable file. Also, the null category value was replaced from 255 in iSDA to 0 in SARRA format.
+
+https://dataverse.cirad.fr/dataset.xhtml?persistentId=doi:10.18167/DVN1/YSVTS2
 
 This repo also hosts a downscaled ISRIC Africa SoilGrids soil texture class (USDA system) to be used with SARRA. Downscaling was performed from computing the mode of the different layers in the 0-60cm depth range of the classification, at 4km resolution, aligned with TAMSAT raster files. Values were converted to SARRA-O soil type format, a 7 to 8 digit integer where the 6 last digits must be zeroes, and the first digits are the USDA soil code corresponding to the soil characteristics described in the `./data/csvTypeSol/` folder of SARRA-O executable file. Also, the null category value was replaced from 255 in iSDA to 0 in SARRA format.
 
