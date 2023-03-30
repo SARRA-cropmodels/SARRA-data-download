@@ -8,11 +8,8 @@ import pandas as pd
 from datetime import datetime as dt
 import datetime
 import rasterio
-from rasterio.plot import show
 from tqdm import tqdm
 import numpy as np
-import schedule
-
 
 
 
