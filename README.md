@@ -1,18 +1,27 @@
 
 # SARRA data download
-This repo is a collection of tools to download and prepare climate and weather files necessary for SARRA-O runs. So far, it can be used to retrieve AgERA5 daily data from the Copernicus Climate Data Store.
-
-Rationale : allow for easy download of time series from different data providers for Africa, that will be converted in geotiff and clipped along the desired coordinates for ease of use in SARRA crop models (both SARRA-O, SARRA-H and SARRA-Py)
+This repo is a collection of tools to download and prepare climate and weather files necessary for the use of [SARRA-O](https://gitlab.cirad.fr/sarrao/model/sarrao) and [SARRA-Py](https://github.com/SARRA-cropmodels/SARRA-Py) spatialized crop simulation models. Its rationale is to allow for easy download of time series datasets from different data providers for Africa.
 
 ## How to install
 You will need Python 3.9.6 or above.
-First, [setup a Copernicus Climate Data Store API key](https://cds.climate.copernicus.eu/api-how-to) and accept [Copernicus Terms of Service](https://cds.climate.copernicus.eu/cdsapp/#!/terms/licence-to-use-copernicus-products).
+
 Then, clone this repo and install its dependencies :
 
     git clone https://github.com/SARRA-cropmodels/SARRA_data-download
+    cd SARRA_data-download
     pip install -r requirements.txt
+
 ## How to use
+**Get satellite rainfall estimates**
+
+This Jupyter notebook contains code to download and prepare daily satellite rainfall estimates for a given year from three data sources : TAMSAT (https://www.tamsat.org.uk/), CHIRPS (https://www.chc.ucsb.edu/data/chirps), and IMERG (https://gpm.nasa.gov/data/imerg).
+
+Open the notebook, modify the parameters in the appropriate section and run the cells.
+
+
+
 **AgERA5 data download**
+First, [setup a Copernicus Climate Data Store API key](https://cds.climate.copernicus.eu/api-how-to) and accept [Copernicus Terms of Service](https://cds.climate.copernicus.eu/cdsapp/#!/terms/licence-to-use-copernicus-products).
 
     cd SARRA_data_download
     python get_AgERA5_data.py
@@ -25,10 +34,8 @@ Output files will be daily geotiffs, as required to run SARRA-O.
 
 The downloaded and prepared data will be stored in the `./data/3_output/` path.
 
-**TAMSAT data download**
 
-    cd SARRA_data_download
-    python get_TAMSAT_data.py
+
 
 This script automatically downloads TAMSAT v3.1 data for the whole month of the last AgERA5 available date, every day at 12:00 PM. For example, if the current date is 2022-09-15, the last available date in AgERA5 will be 2022-09-07, thus, the script will download all TAMSAT data from 2022-09-01 to 2022-09-07.
 Download is performed by default on an extent covering all West Africa (29°N,-20°E to 3.5°N,26°E).
@@ -69,3 +76,15 @@ Utiliser un MNT à la résolution des données pluie
 TAMSAT resolution
 sols actuellement à 9km
 isda soil : à dégrader à la résolution de la pluie, ou a 3 km
+
+
+https://www.catds.fr/Products/Available-products-from-CEC-SM/L4-Land-research-products/PrISM-precipitation-product
+https://zenodo.org/record/5998113#.YzqpyITP02w
+https://zenodo.org/record/5998113#.Y1k1BITP02w
+https://earth.esa.int/eogateway/news/smos-data-improve-estimates-of-rainfall-in-africa
+
+https://hal.inrae.fr/hal-02626156v2/document
+https://www.mdpi.com/2072-4292/12/3/481
+https://www.mdpi.com/2072-4292/14/3/746
+
+
