@@ -10,6 +10,8 @@ from tqdm import tqdm as tqdm
 import rioxarray as rio
 import rioxarray
 import numpy as np
+from joblib import Parallel, delayed
+import multiprocessing
 
 
 
@@ -96,6 +98,35 @@ def download_TAMSAT_year(query_year, area, selected_area, save_path):
         crop_and_save_TAMSAT_day(query_date_loop, area, selected_area, save_path)
         # except:
         #     pass
+
+
+
+
+def process_TAMSAT_day(query_date, area, selected_area, save_path):
+    try:
+        download_TAMSAT_day(query_date, save_path)
+        crop_and_save_TAMSAT_day(query_date, area, selected_area, save_path)
+        return True
+    except:
+        return False
+
+
+
+
+
+def download_TAMSAT_year_parallel(query_year, area, selected_area, save_path):
+
+    end_date = datetime.date(query_year,12,31)
+    start_date = datetime.date(query_year,1,1)
+    num_days = (end_date-start_date).days
+
+    query_dates = [datetime.date(query_year,1,1) + datetime.timedelta(days=num_day) for num_day in range(num_days+1)]
+
+    num_cores = multiprocessing.cpu_count()
+    # results = Parallel(n_jobs=num_cores)(delayed(process_TAMSAT_day)(query_date, area, selected_area, save_path) for query_date in query_dates)
+
+    # add tqdm to parallel processing
+    results = Parallel(n_jobs=num_cores)(delayed(process_TAMSAT_day)(query_date, area, selected_area, save_path) for query_date in tqdm(query_dates))
 
 
 
