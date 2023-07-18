@@ -177,7 +177,7 @@ def convert_AgERA5_netcdf_to_geotiff(area, selected_area, variables, query=dt.to
 
 
 
-def calculate_AgERA5_ET0_and_save(area, selected_area, variables, query=dt.today(), save_path="../data/"):
+def calculate_AgERA5_ET0_and_save(area, selected_area, variables, query=dt.today(), save_path="../data/", version="SARRA-Py"):
 
     print("===== calculate_AgERA5_ET0_and_save =====")
 
@@ -282,12 +282,24 @@ def calculate_AgERA5_ET0_and_save(area, selected_area, variables, query=dt.today
             # J/m²/d
             img_irrad = rasterio.open(os.path.join(conversion_path_irrad,list_files_irrad[i]))
             arr_irrad = img_irrad.read()
+            # data is downloaded in J/m²/d
             # pcse needs J/m²/d, no conversion needed
-            # however SARRA needs kJ/m²/d
-            arr_irrad = np.round(arr_irrad / 1000,0) # .astype(int)
 
-            # depending on the version, it may need MJ/m²/j
-            # arr_irrad = np.round(arr_irrad / 1000000,0)
+            if version == "SARRA-Py":
+                # however SARRA-Py needs kJ/m²/d
+                arr_irrad = np.round(arr_irrad / 1000,0) # .astype(int)
+
+            elif version =="SARRA-O":
+                # according to doc, SARRA-O needs W/m² i.e. J/m²/d
+                # here for the sake of experimentation, we convert to hJ/m²/d
+                arr_irrad = np.round(arr_irrad / 100,0) # .astype(int)
+                pass
+
+            else:
+                # raise exception  
+                raise Exception("Version not recognized") 
+
+
 
             geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/solar_radiation_flux_daily/")
 
@@ -347,8 +359,21 @@ def calculate_AgERA5_ET0_and_save(area, selected_area, variables, query=dt.today
             # "When solar radiation data, relative humidity data and/or wind speed data are missing,
             # ETo can be estimated using the Hargreaves ETo equation" in FAO 56
 
+            # providing back the good units for irradiance, from kJ/m²/d to J/m²/d
+            if version == "SARRA-Py":
+                # converting SARRA-Py kJ/m²/d to MJ/m²/d
+                arr_irrad = np.round(arr_irrad / 1000,0) # .astype(int)
+
+            elif version =="SARRA-O":
+                # converting SARRA-O hJ/m²/d to MJ/m²/d
+                # here for the sake of experimentation, we convert to hJ/m²/d
+                arr_irrad = np.round(arr_irrad / 10000,0) # .astype(int)
+                pass
+
+            
+
             coeff = 0.0023
-            arr_ET0 = coeff * (arr_tmean + 17.8) * 0.408 * arr_irrad/1000 * (abs(arr_tmax - arr_tmin))**0.5
+            arr_ET0 = coeff * (arr_tmean + 17.8) * 0.408 * arr_irrad * (abs(arr_tmax - arr_tmin))**0.5
 
             ## on sauvegarde les geotiffs
 
@@ -387,10 +412,10 @@ variables = [
     ("2m_temperature","24_hour_mean"),
 ]
 
-def download_AgERA5_year(query_year, area, selected_area, save_path):
+def download_AgERA5_year(query_year, area, selected_area, save_path, version):
     query_date = datetime.date(query_year,1,1)
     download_AgERA5_data(area, selected_area, variables, mode="year", query=query_date)
     extract_AgERA5_data(area, selected_area, variables, mode="year", query=query_date)
     convert_AgERA5_netcdf_to_geotiff(area, selected_area, variables, query=query_date) 
-    calculate_AgERA5_ET0_and_save(area, selected_area, variables, query=query_date)
+    calculate_AgERA5_ET0_and_save(area, selected_area, variables, query=query_date, version=version)
     print("===== Query date",query_date,"all done ! =====")
