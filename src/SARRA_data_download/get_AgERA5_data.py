@@ -66,6 +66,7 @@ def download_AgERA5_data(area, selected_area, variables, mode="month", query=dt.
                 'variable': variable[0],
                 'statistic': variable[1],
                 'area': area[selected_area],
+                'version':'1_1',
             }
 
         if mode == "month":

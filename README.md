@@ -1,6 +1,10 @@
 
 # SARRA data download
 
+Welcome to the SARRA-data-download repository - your go-to source for streamlined climate and weather data preparation for crop simulation models in Africa. Our repository includes tools to download daily rainfall estimates from providers like TAMSAT, CHIRPS, and IMERG, as well as AgERA5 climate data. These datasets are crucial for the use of SARRA-O and SARRA-Py spatialized crop simulation models.
+
+The output format of these tools is a series of geotiff files with the same spatial resolution as the input data. These geotiff files can be used in various applications, including QGIS, for visualization and analysis. With the SARRA data download repository, you can simplify your data preparation process and elevate your crop simulation models in Africa. Install Python 3.9.6 or above, clone the repo, and follow the instructions to get started!
+
 This repo is a collection of tools to download and prepare climate and weather files necessary for the use of [SARRA-O](https://gitlab.cirad.fr/sarrao/model/sarrao) and [SARRA-Py](https://github.com/SARRA-cropmodels/SARRA-Py) spatialized crop simulation models. Its rationale is to allow for easy download of time series datasets from different data providers for Africa.
 
 

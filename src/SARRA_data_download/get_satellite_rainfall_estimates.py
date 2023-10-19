@@ -152,9 +152,9 @@ def build_CHIRPS_filename(query_date, selected_area=None):
     query_year = query_date.strftime('%Y')
 
     if selected_area == None :
-        filename = "CHIRPS_v2.0_Africa_"+query_year+"_"+query_month+"_"+query_day
+        filename = "CHIRPS_v2.0_"+query_year+"_"+query_month+"_"+query_day
     else :
-        filename = "CHIRPS_v2.0_Africa_"+selected_area+"_"+query_year+"_"+query_month+"_"+query_day
+        filename = "CHIRPS_v2.0_"+selected_area+"_"+query_year+"_"+query_month+"_"+query_day
 
     return filename
 
@@ -177,7 +177,8 @@ def download_CHIRPS_day(query_date, download_path="../data/0_downloads/"):
     query_year = query_date.strftime('%Y')
 
     URL_filename = "chirps-v2.0."+query_year+"."+query_month+"."+query_day+".tif.gz"
-    URL_full = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/africa_daily/tifs/p05/"+query_year+"/"+URL_filename
+    # URL_full = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/africa_daily/tifs/p05/"+query_year+"/"+URL_filename
+    URL_full = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/tifs/p05/"+query_year+"/"+URL_filename
 
     save_filename = build_CHIRPS_filename(query_date)+".tif.gz"
 
