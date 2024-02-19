@@ -71,9 +71,7 @@ def crop_and_save_TAMSAT_day(query_date, area, selected_area, save_path):
 
     if not os.path.exists(output_path):
         os.makedirs(output_path)
-
     bT.rio.to_raster(os.path.join(output_path,output_filename))
-
     # deleting original nc file
     os.remove(os.path.join(save_path,save_filename))
 
@@ -315,7 +313,7 @@ def download_IMERG_day(query_date, save_path, username, password):
     doy = query_date.timetuple().tm_yday
 
 
-    URL_filename = ("3B-DAY-GIS.MS.MRG.3IMERG."+str(query_date.year)+query_month+query_day+"-S000000-E235959."+f"{30*(doy-1):04d}"+".V06B.tif")
+    URL_filename = ("3B-DAY-GIS.MS.MRG.3IMERG."+str(query_date.year)+query_month+query_day+"-S000000-E235959."+f"{30*(doy-1):04d}"+".V07B.tif")
     URL_full = "https://arthurhouhttps.pps.eosdis.nasa.gov/gpmdata/"+str(query_date.year)+"/"+query_month+"/"+query_day+"/gis/"+URL_filename
 
     # print(URL_full)
@@ -337,7 +335,7 @@ def crop_and_save_IMERG_day(query_date, area, selected_area, save_path):
     query_month = query_date.strftime('%m')
     query_day = query_date.strftime('%d')
     doy = query_date.timetuple().tm_yday
-    URL_filename = ("3B-DAY-GIS.MS.MRG.3IMERG."+str(query_date.year)+query_month+query_day+"-S000000-E235959."+f"{30*(doy-1):04d}"+".V06B.tif")
+    URL_filename = ("3B-DAY-GIS.MS.MRG.3IMERG."+str(query_date.year)+query_month+query_day+"-S000000-E235959."+f"{30*(doy-1):04d}"+".V07B.tif")
     save_filename = "IMERG_"+URL_filename.replace("/","_")
     nc_file_content = xr.open_dataset(os.path.join(save_path,save_filename))
 
@@ -369,6 +367,18 @@ def crop_and_save_IMERG_day(query_date, area, selected_area, save_path):
 
 
 
+def process_IMERG_day(query_date, area, selected_area, save_path):
+    try:
+        download_IMERG_day(query_date, save_path, username, password)
+        crop_and_save_IMERG_day(query_date, area, selected_area, save_path)
+        return True
+    except:
+        return False
+
+
+
+
+
 def download_IMERG_year(query_year, area, selected_area, save_path, username, password):
 
     end_date = datetime.date(query_year,12,31)
@@ -386,8 +396,9 @@ def download_IMERG_year(query_year, area, selected_area, save_path, username, pa
         # except:
         #     print("nope")
 
-
-
+    # query_dates = [datetime.date(query_year,1,1) + datetime.timedelta(days=num_day) for num_day in range(num_days+1)]
+    # num_cores = multiprocessing.cpu_count()
+    # results = Parallel(n_jobs=num_cores)(delayed(process_IMERG_day)(query_date, area, selected_area, save_path) for query_date in tqdm(query_dates))
 
 
 
