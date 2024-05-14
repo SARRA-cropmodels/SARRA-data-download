@@ -31,7 +31,7 @@ def download_TAMSAT_day(query_date, save_path):
     query_day = query_date.strftime('%d')
 
     URL_filename = str(query_date.year)+"/"+str(query_month)+"/rfe"+str(query_date.year)+"_"+str(query_month)+"_"+str(query_day)+".v3.1.nc"
-    URL_full = "http://www.tamsat.org.uk/public_data/data/v3.1/daily/"+URL_filename
+    URL_full = "https://gws-access.jasmin.ac.uk/public/tamsat/rfe/data/v3.1/daily/"+URL_filename
 
     # if save_path does not exist, we create it
     if not os.path.exists(save_path):
