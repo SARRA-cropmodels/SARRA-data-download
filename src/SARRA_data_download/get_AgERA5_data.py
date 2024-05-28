@@ -182,224 +182,224 @@ def calculate_AgERA5_ET0_and_save(area, selected_area, variables, query=dt.today
 
     print("===== calculate_AgERA5_ET0_and_save =====")
 
-    try:
+    # try:
 
-        query_year = query.year
-        query_month = query.strftime('%m')
+    query_year = query.year
+    query_month = query.strftime('%m')
 
-        # tmin
-        variable = variables[0]
-        conversion_path_tmin = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
-        list_files_tmin = os.listdir(conversion_path_tmin)
+    # tmin
+    variable = variables[0]
+    conversion_path_tmin = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
+    list_files_tmin = [file for file in os.listdir(conversion_path_tmin) if str(query_year) in file]
 
-        # tmax
-        variable = variables[1]
-        conversion_path_tmax = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
-        list_files_tmax = os.listdir(conversion_path_tmax)
+    # tmax
+    variable = variables[1]
+    conversion_path_tmax = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
+    list_files_tmax = [file for file in os.listdir(conversion_path_tmax) if str(query_year) in file]
 
-        # irrad
-        variable = variables[2]
-        conversion_path_irrad = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
-        list_files_irrad = os.listdir(conversion_path_irrad)
+    # irrad
+    variable = variables[2]
+    conversion_path_irrad = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
+    list_files_irrad = [file for file in os.listdir(conversion_path_irrad) if str(query_year) in file]
 
-        # vapour pressure
-        variable = variables[3]
-        conversion_path_vp = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
-        list_files_vp = os.listdir(conversion_path_vp)
+    # vapour pressure
+    variable = variables[3]
+    conversion_path_vp = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
+    list_files_vp = [file for file in os.listdir(conversion_path_vp) if str(query_year) in file]
 
-        # wind
-        variable = variables[4]
-        conversion_path_wind = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
-        list_files_wind = os.listdir(conversion_path_wind)
+    # wind
+    variable = variables[4]
+    conversion_path_wind = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
+    list_files_wind = [file for file in os.listdir(conversion_path_wind) if str(query_year) in file]
 
-        # tmean
-        variable = variables[5]
-        conversion_path_tmean = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
-        list_files_tmean = os.listdir(conversion_path_tmean)
-
-
-
-        # testing if all folders have the same number of files
-        len(list_files_tmin) == len(list_files_tmax) == len(list_files_irrad) == len(list_files_vp) == len(list_files_wind) == len(list_files_tmean)
+    # tmean
+    variable = variables[5]
+    conversion_path_tmean = os.path.join(save_path,'2_conversion/AgERA5_'+selected_area+"/"+variable[0]+'_'+variable[1]+'/')
+    list_files_tmean = [file for file in os.listdir(conversion_path_tmean) if str(query_year) in file]
 
 
 
-
-        for i in tqdm(range(len(list_files_irrad))):
-
-            ## on charge les arrays
-
-            ######################## tmin
-            img_tmin = rasterio.open(os.path.join(conversion_path_tmin,list_files_tmin[i]))
-            arr_tmin = img_tmin.read()
-            arr_tmin = arr_tmin - 273.15
-
-            geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/2m_temperature_24_hour_minimum/")
-            
-
-            if not os.path.exists(geotiff_path):
-                os.makedirs(geotiff_path)
-
-            new_dataset = rasterio.open(
-                geotiff_path+"2m_temperature_24_hour_minimum_"+'_'.join(list_files_tmin[i].split("_")[-3:]),
-                'w',
-                driver='GTiff',
-                height=arr_tmin.shape[1],
-                width=arr_tmin.shape[2],
-                count=1,
-                dtype=arr_tmin.dtype,
-                crs=img_tmin.crs,
-                transform=img_tmin.transform,
-            )
-
-            new_dataset.write(arr_tmin[0,:,:], 1)
-            
-
-            ######################## tmax
-            img_tmax = rasterio.open(os.path.join(conversion_path_tmax,list_files_tmax[i]))
-            arr_tmax = img_tmax.read()
-            arr_tmax = arr_tmax - 273.15
-
-            geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/2m_temperature_24_hour_maximum/")
-
-            if not os.path.exists(geotiff_path):
-                os.makedirs(geotiff_path)
-
-            new_dataset = rasterio.open(
-                geotiff_path+"2m_temperature_24_hour_maximum_"+'_'.join(list_files_tmax[i].split("_")[-3:]),
-                'w',
-                driver='GTiff',
-                height=arr_tmax.shape[1],
-                width=arr_tmax.shape[2],
-                count=1,
-                dtype=arr_tmax.dtype,
-                crs=img_tmax.crs,
-                transform=img_tmax.transform,
-            )
-
-            new_dataset.write(arr_tmax[0,:,:], 1)
-
-            ######################## irrad
-            # J/m²/d
-            img_irrad = rasterio.open(os.path.join(conversion_path_irrad,list_files_irrad[i]))
-            arr_irrad = img_irrad.read()
-            # data is downloaded in J/m²/d
-            # pcse needs J/m²/d, no conversion needed
-
-            if version == "SARRA-Py":
-                # however SARRA-Py needs kJ/m²/d
-                arr_irrad = np.round(arr_irrad / 1000,0) # .astype(int)
-
-            elif version =="SARRA-O":
-                # according to doc, SARRA-O needs W/m² i.e. J/m²/d
-                # here for the sake of experimentation, we convert to hJ/m²/d
-                arr_irrad = np.round(arr_irrad / 100,0) # .astype(int)
-                pass
-
-            else:
-                # raise exception  
-                raise Exception("Version not recognized") 
+    # testing if all folders have the same number of files
+    len(list_files_tmin) == len(list_files_tmax) == len(list_files_irrad) == len(list_files_vp) == len(list_files_wind) == len(list_files_tmean)
 
 
 
-            geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/solar_radiation_flux_daily/")
 
-            if not os.path.exists(geotiff_path):
-                os.makedirs(geotiff_path)
+    for i in tqdm(range(len(list_files_irrad))):
 
-            new_dataset = rasterio.open(
-                geotiff_path+"solar_radiation_flux_daily_"+'_'.join(list_files_irrad[i].split("_")[-3:]),
-                'w',
-                driver='GTiff',
-                height=arr_irrad.shape[1],
-                width=arr_irrad.shape[2],
-                count=1,
-                dtype=arr_irrad.dtype,
-                crs=img_irrad.crs,
-                transform=img_irrad.transform,
-            )
+        ## on charge les arrays
 
-            new_dataset.write(arr_irrad[0,:,:], 1)
+        ######################## tmin
+        img_tmin = rasterio.open(os.path.join(conversion_path_tmin,list_files_tmin[i]))
+        arr_tmin = img_tmin.read()
+        arr_tmin = arr_tmin - 273.15
+
+        geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/2m_temperature_24_hour_minimum/")
+        
+
+        if not os.path.exists(geotiff_path):
+            os.makedirs(geotiff_path)
+
+        new_dataset = rasterio.open(
+            geotiff_path+"2m_temperature_24_hour_minimum_"+'_'.join(list_files_tmin[i].split("_")[-3:]),
+            'w',
+            driver='GTiff',
+            height=arr_tmin.shape[1],
+            width=arr_tmin.shape[2],
+            count=1,
+            dtype=arr_tmin.dtype,
+            crs=img_tmin.crs,
+            transform=img_tmin.transform,
+        )
+
+        new_dataset.write(arr_tmin[0,:,:], 1)
+        
+
+        ######################## tmax
+        img_tmax = rasterio.open(os.path.join(conversion_path_tmax,list_files_tmax[i]))
+        arr_tmax = img_tmax.read()
+        arr_tmax = arr_tmax - 273.15
+
+        geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/2m_temperature_24_hour_maximum/")
+
+        if not os.path.exists(geotiff_path):
+            os.makedirs(geotiff_path)
+
+        new_dataset = rasterio.open(
+            geotiff_path+"2m_temperature_24_hour_maximum_"+'_'.join(list_files_tmax[i].split("_")[-3:]),
+            'w',
+            driver='GTiff',
+            height=arr_tmax.shape[1],
+            width=arr_tmax.shape[2],
+            count=1,
+            dtype=arr_tmax.dtype,
+            crs=img_tmax.crs,
+            transform=img_tmax.transform,
+        )
+
+        new_dataset.write(arr_tmax[0,:,:], 1)
+
+        ######################## irrad
+        # J/m²/d
+        img_irrad = rasterio.open(os.path.join(conversion_path_irrad,list_files_irrad[i]))
+        arr_irrad = img_irrad.read()
+        # data is downloaded in J/m²/d
+        # pcse needs J/m²/d, no conversion needed
+
+        if version == "SARRA-Py":
+            # however SARRA-Py needs kJ/m²/d
+            arr_irrad = np.round(arr_irrad / 1000,0) # .astype(int)
+
+        elif version =="SARRA-O":
+            # according to doc, SARRA-O needs W/m² i.e. J/m²/d
+            # here for the sake of experimentation, we convert to hJ/m²/d
+            arr_irrad = np.round(arr_irrad / 100,0) # .astype(int)
+            pass
+
+        else:
+            # raise exception  
+            raise Exception("Version not recognized") 
 
 
-            # hPa
-            img_vp = rasterio.open(os.path.join(conversion_path_vp,list_files_vp[i]))
-            arr_vp = img_vp.read()
-            # pcse needs hPa, no conversion needed
 
-            # m/s
-            img_wind = rasterio.open(os.path.join(conversion_path_wind,list_files_wind[i]))
-            arr_wind = img_wind.read()
-            # pcse needs m/s, no conversion needed
+        geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/solar_radiation_flux_daily/")
 
-            img_tmean = rasterio.open(os.path.join(conversion_path_tmean,list_files_tmean[i]))
-            arr_tmean = img_tmean.read()
-            arr_tmean = arr_tmean - 273.15
+        if not os.path.exists(geotiff_path):
+            os.makedirs(geotiff_path)
 
-            geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/2m_temperature_24_hour_mean/")
+        new_dataset = rasterio.open(
+            geotiff_path+"solar_radiation_flux_daily_"+'_'.join(list_files_irrad[i].split("_")[-3:]),
+            'w',
+            driver='GTiff',
+            height=arr_irrad.shape[1],
+            width=arr_irrad.shape[2],
+            count=1,
+            dtype=arr_irrad.dtype,
+            crs=img_irrad.crs,
+            transform=img_irrad.transform,
+        )
 
-            if not os.path.exists(geotiff_path):
-                os.makedirs(geotiff_path)
+        new_dataset.write(arr_irrad[0,:,:], 1)
 
-            new_dataset = rasterio.open(
-                geotiff_path+"2m_temperature_24_hour_mean_"+'_'.join(list_files_tmean[i].split("_")[-3:]),
-                'w',
-                driver='GTiff',
-                height=arr_tmean.shape[1],
-                width=arr_tmean.shape[2],
-                count=1,
-                dtype=arr_tmean.dtype,
-                crs=img_tmean.crs,
-                transform=img_tmean.transform,
-            )
 
-            new_dataset.write(arr_tmean[0,:,:], 1)
+        # hPa
+        img_vp = rasterio.open(os.path.join(conversion_path_vp,list_files_vp[i]))
+        arr_vp = img_vp.read()
+        # pcse needs hPa, no conversion needed
 
-            ## on calcule le ET0
+        # m/s
+        img_wind = rasterio.open(os.path.join(conversion_path_wind,list_files_wind[i]))
+        arr_wind = img_wind.read()
+        # pcse needs m/s, no conversion needed
 
-            # "When solar radiation data, relative humidity data and/or wind speed data are missing,
-            # ETo can be estimated using the Hargreaves ETo equation" in FAO 56
+        img_tmean = rasterio.open(os.path.join(conversion_path_tmean,list_files_tmean[i]))
+        arr_tmean = img_tmean.read()
+        arr_tmean = arr_tmean - 273.15
 
-            # providing back the good units for irradiance, from kJ/m²/d to J/m²/d
-            if version == "SARRA-Py":
-                # converting SARRA-Py kJ/m²/d to MJ/m²/d
-                arr_irrad = np.round(arr_irrad / 1000,0) # .astype(int)
+        geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/2m_temperature_24_hour_mean/")
 
-            elif version =="SARRA-O":
-                # converting SARRA-O hJ/m²/d to MJ/m²/d
-                # here for the sake of experimentation, we convert to hJ/m²/d
-                arr_irrad = np.round(arr_irrad / 10000,0) # .astype(int)
-                pass
+        if not os.path.exists(geotiff_path):
+            os.makedirs(geotiff_path)
 
-            
+        new_dataset = rasterio.open(
+            geotiff_path+"2m_temperature_24_hour_mean_"+'_'.join(list_files_tmean[i].split("_")[-3:]),
+            'w',
+            driver='GTiff',
+            height=arr_tmean.shape[1],
+            width=arr_tmean.shape[2],
+            count=1,
+            dtype=arr_tmean.dtype,
+            crs=img_tmean.crs,
+            transform=img_tmean.transform,
+        )
 
-            coeff = 0.0023
-            arr_ET0 = coeff * (arr_tmean + 17.8) * 0.408 * arr_irrad * (abs(arr_tmax - arr_tmin))**0.5
+        new_dataset.write(arr_tmean[0,:,:], 1)
 
-            ## on sauvegarde les geotiffs
+        ## on calcule le ET0
 
-            geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/ET0Hargeaves/")
+        # "When solar radiation data, relative humidity data and/or wind speed data are missing,
+        # ETo can be estimated using the Hargreaves ETo equation" in FAO 56
 
-            if not os.path.exists(geotiff_path):
-                os.makedirs(geotiff_path)
-            
-            # on utilise tmean pour récupérer la date dans le nom de fichier, le crs et le transform
-            new_dataset = rasterio.open(
-                geotiff_path+"ET0Hargreaves_"+'_'.join(list_files_tmean[i].split("_")[-3:]),
-                'w',
-                driver='GTiff',
-                height=arr_ET0.shape[1],
-                width=arr_ET0.shape[2],
-                count=1,
-                dtype=arr_ET0.dtype,
-                crs=img_tmean.crs,
-                transform=img_tmean.transform,
-            )
+        # providing back the good units for irradiance, from kJ/m²/d to J/m²/d
+        if version == "SARRA-Py":
+            # converting SARRA-Py kJ/m²/d to MJ/m²/d
+            arr_irrad = np.round(arr_irrad / 1000,0) # .astype(int)
 
-            new_dataset.write(arr_ET0[0,:,:], 1)
+        elif version =="SARRA-O":
+            # converting SARRA-O hJ/m²/d to MJ/m²/d
+            # here for the sake of experimentation, we convert to hJ/m²/d
+            arr_irrad = np.round(arr_irrad / 10000,0) # .astype(int)
+            pass
 
-    except:
-        print("/!\ Calculation of ET0 NOT OK")
+        
+
+        coeff = 0.0023
+        arr_ET0 = coeff * (arr_tmean + 17.8) * 0.408 * arr_irrad * (abs(arr_tmax - arr_tmin))**0.5
+
+        ## on sauvegarde les geotiffs
+
+        geotiff_path = os.path.join(save_path,'3_output/AgERA5_'+selected_area+"/ET0Hargeaves/")
+
+        if not os.path.exists(geotiff_path):
+            os.makedirs(geotiff_path)
+        
+        # on utilise tmean pour récupérer la date dans le nom de fichier, le crs et le transform
+        new_dataset = rasterio.open(
+            geotiff_path+"ET0Hargreaves_"+'_'.join(list_files_tmean[i].split("_")[-3:]),
+            'w',
+            driver='GTiff',
+            height=arr_ET0.shape[1],
+            width=arr_ET0.shape[2],
+            count=1,
+            dtype=arr_ET0.dtype,
+            crs=img_tmean.crs,
+            transform=img_tmean.transform,
+        )
+
+        new_dataset.write(arr_ET0[0,:,:], 1)
+
+    # except:
+    #     print("/!\ Calculation of ET0 NOT OK")
 
 
 
